@@ -1,5 +1,5 @@
-# Browser-Automation-
-Python
+# Browser-Automation
+<strong>Using Python</strong><br>
 Get json data from movie titles list, using https://www.omdbapi.com/ API without the need of API key 
 
 - Requires
