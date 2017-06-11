@@ -7,7 +7,7 @@ import sys
 #capabilities["marionette"] = False
 #binary = FirefoxBinary(r'/usr/lib/firefox/firefox')
 #driver = webdriver.Firefox(firefox_binary=binary, capabilities=capabilities)
-
+#If you have mozila browser uncomment above lines and change chrome to Firefox below.
 driver = webdriver.Chrome()
 driver.get("https://www.omdbapi.com")
 assert "OMDb" in driver.title
