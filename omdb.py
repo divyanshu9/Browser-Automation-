@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+#from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import sys
 
 #capabilities = webdriver.DesiredCapabilities().FIREFOX
@@ -14,31 +14,32 @@ assert "OMDb" in driver.title
 elem = driver.find_element_by_name("t")
 elem.clear()
 def capture(query):
+	global elem
 	elem.clear()
 	print "\n Trying query: %s \n" % (query)
 	elem.send_keys("")
 	elem.send_keys(query)
 	elem.send_keys(Keys.RETURN)
-	assert "No results found." not in driver.page_source
 	data = driver.find_element_by_css_selector('pre.alert-success')
 	
 	try:
 		text = data.text
 		text = text +","+"\n"
 		text = text.encode('ascii', 'ignore').decode('ascii')
-		print(text)
-		with open("mvdb.json", "a") as f:
-			f.write("\n"+text)
-		#file("mvdb.json", "w").write(text)
-	except Error:
-		print "Error"
-		sys.exit()
+	except Exception:
+		print "some error"
+	return text
 #driver.close()
 
 def search():
 	global query
 	for query in querys:
-		capture(query)
+		text = capture(query)
+		if text != "," and text != """{"Response":"False","Error":"Movie not found!"},\n""":
+			print text
+			with open("mvdb.json", "a") as f:
+				f.write("\n"+text)
+				#file("mvdb.json", "w").write(text)
 
 def check():
 	print "in check"
